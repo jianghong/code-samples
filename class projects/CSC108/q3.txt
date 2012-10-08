@@ -1,9 +1,0 @@
-SEARCH
-tomCruise
-followed-by
-follows
-FILTER
-follows katieH
-PRESENT
-sort-by username
-format long
