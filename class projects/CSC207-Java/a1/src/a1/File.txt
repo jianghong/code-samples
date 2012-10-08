@@ -1,0 +1,8 @@
+Class name: File
+Responsibilities:
+* Exists in Folders as a leaf node
+* Controls editing of file types
+* File can handle the 'echo' command
+Collaborators:
+* Works with Folder, which holds it and Directory to tell where the file is 
+* relative to other Folders and/or Files

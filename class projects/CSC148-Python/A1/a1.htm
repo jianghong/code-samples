@@ -1,0 +1,946 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en"><head>
+
+
+  
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="a1_files/styles.htm" type="text/css">
+    
+    
+    <title>
+      CSC148H/A48H Assignment 1
+    </title>
+  </head><body>
+      <div class="title">
+	<h1>CSC148H/A48H Assignment 1, Winter 2011</h1>
+      </div>
+      
+      <h2>Due: Monday <b>24</b> January, by 1:00 am sharp!</h2>
+      
+      <h2>Contents</h2>
+      
+      <ul>
+	<li>
+	  <a href="#intro">Introduction</a>
+	</li>
+	  <ul>
+	    <li>
+	      <a href="#shape">Shape</a>
+	    </li>
+	    <li>
+	      <a href="#priorityqueue">Priority Queue</a>
+	    </li>
+	    <li>
+	      <a href="#partners">Partners</a>
+	    </li>
+	  </ul>
+	<li>
+	  <a href="#functions">Classes to Complete</a>
+	</li>
+	  <ul>
+	    <li>
+	      <a href="#oval">Oval</a>
+	    </li>
+	    <li>
+	      <a href="#rectangle">Rectangle</a>
+	    </li>
+	    <li>
+	      <a href="#line">Line</a>
+	    </li>
+	    <li>
+	      <a href="#pqueue">PriorityQueue</a>
+	    </li>
+	    <li>
+	      <a href="#collage">Collage</a>
+	    </li>
+	  </ul>
+	<li>
+	  <a href="#requirements">Additional Requirements</a>
+	</li>
+	  <ul>
+	    <li>
+	      <a href="#datafile">The Data File</a>
+	    </li>
+          </ul>
+	<li>
+	  <a href="#testing">Testing and Marking</a>
+	</li>
+	<li>
+	  <a href="#submitting">Submitting Your Assignment</a>
+	</li>
+	<li>
+	  <a href="#hints">Hints and Tips</a>
+	</li>
+      </ul>
+      
+      <p>
+	The purpose of this assignment is to provide review of basic
+	Python syntax, and to give you practice creating classes &amp;
+	objects in Python to implement basic ADTs and algorithms. This
+	assignment also reviews the use of the media module for the
+	processing of images.
+      </p>
+      
+      <hr>
+      
+      <a name="intro">
+      </a><h2><a name="intro">Introduction</a></h2>
+<a name="intro">      </a><p>
+<a name="intro">	The concept of layering images is an old technique for
+	generating pictures as a combination of several simple
+	shapes. In art, this originated with the stencil method of
+	drawing (also known as a <em>pochoir</em>). Unlike mosaics,
+	where shapes are assembles side-by-side to create an overall
+	image, stencils could layer one design over another to create
+	an overall effect.
+      </a></p>
+<a name="intro">      </a><table>
+	  <tbody><tr>
+	    <td>
+	      <p>
+		This idea has applications in computer science as
+		well. In computer graphics, <em>digital
+		compositing</em> consists of the creation of an
+		overall image or animated sequence by breaking down
+		the overall image into layers, and rendering each
+		layer one at a time. Also, Windows-based programs
+		(like internet browsers or word processors) use a
+		technique called a visual tree to determine the
+		placement order of components to create the overall
+		look. Flash also uses layers by overlaying simpler
+		images onto each other to create more complex
+		ones. Even windows uses a display buffer in order to
+		know which what parts of each window is visible,
+		depending on which other windows are in front of
+		it. To learn more about this, check out the following
+		links on <a href="http://en.wikipedia.org/wiki/Digital_compositing">Digital
+		Compositing</a> and the <a href="http://en.wikipedia.org/wiki/Windows_Presentation_Foundation">Windows
+		Presentation Foundation</a> (for visual trees).
+	      </p>
+	      <p>
+		In this assignment, you will create modules that will
+		represent shapes as objects, and then create an image
+		that is a combination of these shapes. As a result,
+		your program will have to know how to use the media
+		module to draw each of these shapes, and use a
+		priority queue to determine in what order these shapes
+		must be drawn to create the overall image (see the
+		diagram on the right for an example).
+	      </p>
+	      <p>
+		You should spend <em>at least</em> one hour reading through
+		this handout to make sure you understand what is
+		required. Refer back to it regularly to be sure that you are
+		following the specifications precisely.
+	      </p>
+	    </td>
+	    <td valign="top">
+	      <img src="a1_files/snowman_deconstructed.jpg">
+	    </td>
+	  </tr>
+      </tbody></table>
+<a name="intro">      
+      </a><a name="shape">
+      </a><hr>
+<a name="shape">      </a><h3><a name="shape">The <code>Shape</code> class</a></h3>
+
+<a name="shape">      </a><p>
+<a name="shape">	The <code>Shape</code> class is provided for you </a><a href="http://www.cdf.toronto.edu/%7Ecsc148h/winter/assignments/a1/shape.py"><code>here</code></a>, and is the basis for
+	the other shapes that you will be designing for this
+	assignment. The <code>Oval</code>, <code>Rectangle</code> and
+	<code>Line</code> classes each inherit from the
+	<code>Shape</code> class, and will supplement the
+	implementation of the <code>Shape</code> class with code
+	specific to ovals, rectangles and lines. Each of these
+	subclasses will be stored in its own Python file, and each
+	will need to import the <code>shape</code> module in order to
+	be able to inherit from <code>Shape</code>.
+      </p>
+      <p>
+	The <code>Shape</code> class is initialized with an
+	<code>x</code> and <code>y</code> value, a colour and a
+	priority value (note that <code>x</code> and <code>y</code>
+	mean different things for different shapes). It also comes
+	with a <code>__str__</code> method that returns the basic
+	<code>Shape</code> data as a string, and a <code>draw</code>
+	method with no implementation. Each of these methods must be
+	overridden in all the classes that inherit from
+	<code>Shape</code>.
+      </p>
+      <p>
+	<strong>Note:</strong> <code>shape.py</code> has been provided
+	as a guide, and a starting point for your code. <strong>You
+	are not allowed to modify the contents of
+	<code>shape.py</code></strong>. The <code>Oval</code>,
+	<code>Rectangle</code> and <code>Line</code> subclasses
+	<em>must</em> inherit from <code>Shape</code>, and we will run
+	the code you submit with our original version of
+	<code>shape.py</code>, so any changes or incompatibilities that
+	you introduce will cause your code to fail, and you will
+	receive no marks for the autotested component of your code.
+      </p>
+
+      <a name="priorityqueue">
+      </a><h3><a name="priorityqueue">The Priority Queue</a></h3>
+<a name="priorityqueue">      </a><p>
+<a name="priorityqueue">	The priority queue ADT is an enhanced version of the Queue
+	ADT that assumes that the elements in the queue store both a
+	data value and a <em>priority value</em> for each element. The
+	items in the priority queue are ordered in the following way:
+      </a></p>
+<a name="priorityqueue">      </a><ol>
+<a name="priorityqueue">	</a><li>
+<a name="priorityqueue">	  The items are ordered according to priority value, with
+	  <code>dequeue</code> removing the item with the lowest
+	  priority value first.
+	</a></li>
+<a name="priorityqueue">	</a><li>
+<a name="priorityqueue">	  If there are multiple items with the same lowest priority
+	  value, then <code>dequeue</code> removes the item that was
+	  added first to the priority queue (FIFO ordering).
+	</a></li>
+<a name="priorityqueue">      </a></ol>
+<a name="priorityqueue">      </a><p>
+<a name="priorityqueue">	This is a common and useful structure, used for applications
+	that need to access items in order of importance, not just in
+	the order in which they arrive (think airline checkins and
+	hospital triage centres). For this assignment, the priority
+	queue is used to determine which shapes will be drawn first
+	(low priority items), and which will be drawn last (high
+	priority items).
+      </a></p>
+
+<a name="priorityqueue">      </a><a name="partners">
+      </a><h3><a name="partners">Partners</a></h3><a name="partners">    
+      
+      </a><p>
+<a name="partners">	There are no partners allowed for this
+	assignment. Collaboration and discussion of ideas is
+	encouraged, but you should not be working closely with others
+	when it comes to the actual coding of your assignment. Be sure
+	to consult the </a><a href="http://www.governingcouncil.utoronto.ca/policies/behaveac.htm">Code
+	of Behaviour on Academic Matters</a> if you need any
+	clarfication on the rules surrounding collaboration vs
+	plagiarism.
+      </p>
+      
+      
+      <a name="functions">
+      </a><hr>
+<a name="functions">      </a><h2><a name="functions">Classes to Complete</a></h2>
+<a name="functions">      
+      </a><p>
+<a name="functions">        In files called <code>oval.py</code>, <code>line.py</code>,
+        <code>rectangle.py</code>, <code>priorityqueue.py</code> and
+        <code>collage.py</code>, write the definitions for the shape
+        classes, the priority queue class and the collage class,
+        respectively. The methods needed for each are listed in the
+        table below.
+      </a></p>
+<a name="functions">      </a><p>
+<a name="functions">	The <code>Collage</code> opens a file that specifies the
+	shapes to be drawn and the order in which they will be drawn
+	(file specification is oulined below). It then creates a
+	priority queue, stores all these shapes in the priority queue,
+	and then dequeues the priority queue contents. Each shape is
+	drawn onto the scene as it comes out of the priority
+	queue. The result is a completed scene that is composed of
+	these component shapes.
+      </a></p>
+<a name="functions">      </a><p>
+<a name="functions">        In the table below, we provide the signatures for the methods
+        of each class.  When you write your class definitions, you
+        will pick your own names for the parameters of these
+        methods. Make sure you pick good names. Look at the </a><a href="http://www.cdf.toronto.edu/%7Ecsc148h/winter/assignments/a1/rules.shtml">A1 Assignment rules</a> for help with this.
+      </p>
+      <p>
+	Each method must also include a docstring, and any other
+	comments that help describe the non-obvious sections of your
+	code. The docstring should be an appropriate rephrasing of the
+	specification on the right-hand side of the table.  See the <a href="http://www.cdf.toronto.edu/%7Ecsc148h/winter/assignments/a1/rules.shtml">A1 Assignment rules</a> page for guidance
+	on how to write good docstrings.
+      </p>
+      <p>
+        Some of the functions are useful "helpers" for other
+        functions.  That is, they can be called by another function to
+        do part of its work.  Take advantage of this to avoid
+        repetitive code.  For this assignment, you are expected to
+        write helper functions where appropriate, in addition to the
+        methods required below.
+      </p>
+      <p>
+	<em>For the method descriptions in the tables below, the
+	parameter names are simply suggestions to help disambiguate
+	the parameter values. You are not required to use these names,
+	but you must observe the positions of each parameter in the
+	method signature.</em>
+      </p>
+	 
+      <a name="oval">
+      </a><h3><a name="oval">The <code>Oval</code> Class</a></h3>
+<a name="oval">      </a><table summary="List of methods for the Oval class." border="1" cellpadding="2" cellspacing="0" width="100%">
+	<!-- col width="67*" /> <col width="189*" / -->
+	  <tbody><tr>
+	    <th style="width: 30%;">
+	      Method Name
+	    </th>
+	    <th style="width: 70%;">
+	      Description
+	    </th>
+	  </tr>
+	  <tr>
+	    <td style="width: 30%;">
+	      <code>__init__(self, x, y, width, height, colour, priority)</code>
+	    </td>
+	    <td style="width: 70%;">
+	      Initialize the attributes of the <code>Oval</code>
+	      object. The <code>x</code> and <code>y</code> values
+	      represent the center of the oval, and the width and
+	      height of the oval are passed in as <code>width</code>
+	      and <code>height</code>. All input values are integers,
+	      except for <code>colour</code>, which is a
+	      <code>media.color</code> value.
+	    </td>
+	  </tr>
+	  <tr>
+	    <td style="width: 30%;">
+	      <code>__str__(self)</code>
+	    </td>
+	    <td style="width: 70%;">
+	      <p>
+		Returns the center position of this <code>Oval</code>,
+		along with the height and width, as a string with the
+		following formatting:
+	      </p>
+	      <pre>Oval @ ( 50 , 75 ) height = 40, width = 30
+	      </pre>
+	      <p>
+		(this example would arise from an <code>Oval</code>
+		with <code>x</code> and <code>y</code> values of
+		<code>50</code> and <code>75</code>, and
+		<code>height</code> and <code>width</code> values of
+		<code>40</code> and <code>30</code>.
+	      </p>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td style="width: 30%;">
+	      <code>draw(self, pic)</code>
+	    </td>
+	    <td style="width: 70%;">
+	      Draw this <code>Oval</code> on the <code>Picture</code>
+	      provided. Use the data attributes of this
+	      <code>Oval</code> to specify the location, height, width
+	      and colour of the oval to be drawn on the
+	      <code>Picture</code>.
+	    </td>
+	  </tr>
+      </tbody></table>
+<a name="oval">      
+      
+      </a><a name="rectangle">
+      </a><h3><a name="rectangle">The <code>Rectangle</code> Class</a></h3>
+<a name="rectangle">      </a><table summary="List of methods for the Rectangle class." border="1" cellpadding="2" cellspacing="0" width="100%">
+	<!-- col width="67*" /> <col width="189*" / -->
+	  <tbody><tr>
+	    <th style="width: 30%;">
+	      Method Name
+	    </th>
+	    <th style="width: 70%;">
+	      Description
+	    </th>
+	  </tr>
+	  <tr>
+	    <td style="width: 30%;">
+	      <code>__init__(self, x, y, width, height, colour, priority)</code>
+	    </td>
+	    <td style="width: 70%;">
+	      Initialize the attributes of the <code>Rectangle</code>
+	      object. The <code>x</code> and <code>y</code> values
+	      represent the top left corner of the rectangle, and the
+	      width and height of the rectangle are passed in as
+	      <code>width</code> and <code>height</code>. All input
+	      values are integers, except for <code>colour</code>,
+	      which is a <code>media.color</code> value.
+	    </td>
+	  </tr>
+	  <tr>
+	    <td style="width: 30%;">
+	      <code>__str__(self)</code>
+	    </td>
+	    <td style="width: 70%;">
+	      <p>
+		Returns the top left corner position of this
+		<code>Rectangle</code>, along with the height and
+		width, as a string with the following formatting:
+	      </p>
+	      <pre>Rectangle @ ( 50 , 75 ) height = 40, width = 30
+	      </pre>
+	      <p>
+		(this example represents a <code>Rectangle</code>
+		with <code>x</code> and <code>y</code> values of
+		<code>50</code> and <code>75</code>, and
+		<code>height</code> and <code>width</code> values of
+		<code>40</code> and <code>30</code>.
+	      </p>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td style="width: 30%;">
+	      <code>draw(self, pic)</code>
+	    </td>
+	    <td style="width: 70%;">
+	      Draw this <code>Rectangle</code> on the
+	      <code>Picture</code> provided. Use the data attributes
+	      of this <code>Rectangle</code> to specify the location,
+	      height, width and colour of the resulting rectangle on
+	      the image.
+	    </td>
+	  </tr>
+      </tbody></table>
+<a name="rectangle">      
+
+      </a><a name="line">
+      </a><h3><a name="line">The <code>Line</code> Class</a></h3>
+<a name="line">      </a><table summary="List of methods for the Line class." border="1" cellpadding="2" cellspacing="0" width="100%">
+	<!-- col width="67*" /> <col width="189*" / -->
+	  <tbody><tr>
+	    <th style="width: 30%;">
+	      Method Name
+	    </th>
+	    <th style="width: 70%;">
+	      Description
+	    </th>
+	  </tr>
+	  <tr>
+	    <td style="width: 30%;">
+	      <code>__init__(self, x, y, end_x, end_y, colour, priority)</code>
+	    </td>
+	    <td style="width: 70%;">
+	      Initialize the attributes of the <code>Line</code>
+	      object. The <code>x</code> and <code>y</code> values
+	      represent the starting point of the line, and the
+	      <code>x_end</code> and <code>y_end</code> values
+	      represent the endpoint of the line. Both pairs of
+	      <code>x</code> and <code>y</code> values are passed in
+	      as integers, as is the priority value. As with
+	      <code>Oval</code> and <code>Rectangle</code>, the
+	      <code>colour</code> parameter is a
+	      <code>media.color</code> value.
+	    </td>
+	  </tr>
+	  <tr>
+	    <td style="width: 30%;">
+	      <code>__str__(self)</code>
+	    </td>
+	    <td style="width: 70%;">
+	      <p>
+		Returns the starting and ending coordinates of this
+		<code>Line</code>, as a string with the following
+		formatting:
+	      </p>
+	      <pre>Line @ ( 50 , 75 ) to ( 20 , 30 )
+	      </pre>
+	      <p>
+		(this example represents a <code>Line</code> with
+		starting <code>x</code> and <code>y</code> values of
+		<code>50</code> and <code>75</code>, and ending
+		<code>x</code> and <code>y</code> values of
+		<code>20</code> and <code>30</code>.
+	      </p>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td style="width: 30%;">
+	      <code>draw(self, pic)</code>
+	    </td>
+	    <td style="width: 70%;">
+	      Draw this <code>Line</code> on the
+	      <code>Picture</code> provided. Use the data attributes of
+	      this <code>Line</code> to specify the starting and ending positions of the resulting line,
+	      with the <code>Line</code>'s colour value and a thickness of one.
+	    </td>
+	  </tr>
+      </tbody></table>
+<a name="line">      
+
+      </a><a name="pqueue">
+      </a><h3><a name="pqueue">The <code>PriorityQueue</code> Class</a></h3>
+<a name="pqueue">      </a><table summary="List of methods for the PriorityQueue class." border="1" cellpadding="2" cellspacing="0" width="100%">
+	<!-- col width="67*" /> <col width="189*" / -->
+	  <tbody><tr>
+	    <th style="width: 30%;">
+	      Method Name
+	    </th>
+	    <th style="width: 70%;">
+	      Description
+	    </th>
+	  </tr>
+	  <tr>
+	    <td style="width: 30%;">
+	      <code>__init__(self, list)</code>
+	    </td>
+	    <td style="width: 70%;">
+	      Initialize this priority queue with the given list of
+	      items. All of the items in the list will inherit from
+	      <code>Shape</code>, so they will all have the
+	      <code>get_priority</code> and <code>set_priority</code>
+	      methods. However, you cannot assume that the list is
+	      ordered in any way. The default value for the list
+	      parameter should be the empty list.
+	    </td>
+	  </tr>
+	  <tr>
+	    <td style="width: 30%;">
+	      <code>enqueue(self, item)</code>
+	    </td>
+	    <td style="width: 70%;">
+	      Add an element to the priority queue.
+	    </td>
+	  </tr>
+	  <tr>
+	    <td style="width: 30%;">
+	      <code>dequeue(self)</code>
+	    </td>
+	    <td style="width: 70%;">
+	      Remove the element with the lowest priority value from
+	      the priority queue, and return this element. If two
+	      elements have the same priority value, remove the one
+	      that was added first to the priority queue.
+	    </td>
+	  </tr>
+	  <tr>
+	    <td style="width: 30%;">
+	      <code>size(self)</code>
+	    </td>
+	    <td style="width: 70%;">
+	      Return the size of this priority queue (the number of
+	      elements currently stored in the queue).
+	    </td>
+	  </tr>
+	  <tr>
+	    <td style="width: 30%;">
+	      <code>__str__(self)</code>
+	    </td>
+	    <td style="width: 70%;">
+	      <p>
+		Return the contents of this priority queue as a
+		<code>string</code>. This string is composed of the
+		string version of each item within the queue, in the
+		priority queue order <a href="#priorityqueue">specified above</a>, with a
+		newline character (<code>\n</code>) separating each
+		item.
+	      </p>
+	      <p>
+		For instance, if the <code>__str__</code> method is called from a priority queue with an <code>Oval</code>, a <code>Rectangle</code> and a <code>Line</code>, it might return the following:
+	      </p>
+	      <pre>"Oval @ ( 50 , 75 ) height = 40, width = 40, priority = 0
+Rectangle @ ( 50 , 75 ) height = 40, width = 40, priority = 3
+Line @ ( 50 , 75 ) to ( 20 , 30 ), priority = 4"
+	      </pre>
+	    </td>
+	  </tr>
+      </tbody></table>
+
+<a name="pqueue">      </a><a name="collage">
+      </a><h3><a name="collage">The <code>Collage</code> Class</a></h3>
+<a name="collage">      </a><table summary="List of methods for the Collage class." border="1" cellpadding="2" cellspacing="0" width="100%">
+	<!-- col width="67*" /> <col width="189*" / -->
+	  <tbody><tr>
+	    <th style="width: 30%;">
+	      Method Name
+	    </th>
+	    <th style="width: 70%;">
+	      Description
+	    </th>
+	  </tr>
+	  <tr>
+	    <td style="width: 30%;">
+	      <code>__init__(self, filename)</code>
+	    </td>
+	    <td style="width: 70%;">
+	      <p>
+		Using the shape specifications outlined in the data
+		file, create a collage of shapes to form a complete
+		picture. The data file location is specified by the
+		<code>str</code> filename. You can assume that this
+		string contains the location of a valid file.
+	      </p>
+	      <p>
+		In order to create the collage image, you'll need to
+		create a priority queue structure first, to store all
+		the shapes that go into the final image. Once all the
+		shapes have been enqueued, the collage can be created
+		by creating a new image (using
+		<code>media.create_picture()</code>), and removing the
+		<code>Shape</code> objects from the priority queue one
+		at a time, drawing them as they're being dequeued.
+	      </p>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td style="width: 30%;">
+	      <code>get_picture(self)</code>
+	    </td>
+	    <td style="width: 70%;">
+	      Return the <code>Picture</code> that stores the
+	      assembled collage.
+	    </td>
+	  </tr>
+	  <tr>
+	    <td style="width: 30%;">
+	      <code>show(self)</code>
+	    </td>
+	    <td style="width: 70%;">
+	      Display the collage in a local picture-viewing window
+	      (invoke the <code>Picture</code>'s <code>show()</code>
+	      method)
+	    </td>
+	  </tr>
+      </tbody></table>
+<a name="collage">     
+    </a><a name="requirements">
+    </a><h2><a name="requirements">Additional requirements</a></h2>
+<a name="requirements">      </a><ol><a name="requirements">  
+	</a><li>
+<a name="requirements">	  Your class definitions must be put into separate files
+	  called <code>oval.py</code>, <code>rectangle.py</code>,
+	  <code>line.py</code>, <code>priorityqueue.py</code> and
+	  <code>collage.py</code>. The earlier modules will need to be
+	  imported into the latter ones, and don't forget to import
+	  the <code>shape</code> and <code>media</code> modules where
+	  appropriate.
+	</a></li>
+<a name="requirements">	</a><li>
+<a name="requirements">	  Your <code>__init__</code> methods must provide default
+	  values for the parameters, in the case when values such as
+	  the priority value or shape colour are not provided. For
+	  this assignment, assume the following default values:
+	  </a><ol>
+<a name="requirements">	    </a><li>
+<a name="requirements">	      for integer values, assume a default value of zero.
+	    </a></li>
+<a name="requirements">	    </a><li>
+<a name="requirements">	      for colour, assume a default value of <code>media.white</code>.
+	    </a></li>
+<a name="requirements">	  </a></ol>
+<a name="requirements">	</a></li>
+<a name="requirements">	</a><li>
+<a name="requirements">	  Your methods must have absolutely no user-input  
+	  (i.e. nothing that the user types), and no calls to the 
+	  <code>media.choose_file</code> function.
+          Also, your methods must have absolutely no output -- no
+          <code>print</code> statements; no messages to the user (not 
+          even a "welcome!"); and no displaying of pictures, or 
+          else <font color="red"><strong>you will receive zero for 
+	  your assignment</strong></font>.
+	</a></li>
+<a name="requirements">	</a><li>
+<a name="requirements">          Several classes will necessarily require some helper
+          methods. Generally these are useful when:
+	  </a><ul>
+<a name="requirements">	    </a><li>
+<a name="requirements">	      there is code that is repeated in more than one method,
+	      that could be pulled out into a helper method.
+	    </a></li>
+<a name="requirements">	    </a><li>
+<a name="requirements">	      one of your methods is too long (more than 20 lines is
+	      usually a sign of this), and could be divided into
+	      parts.
+	    </a></li>
+<a name="requirements">	    </a><li>
+<a name="requirements">	      there is an operation that is logically separable from
+	      the rest of the method.
+	    </a></li>
+<a name="requirements">	  </a></ul>
+<a name="requirements">	  Keep in mind that these are just general rules of thumb, and
+	  are meant to give you a general sense of the spirit behind
+	  helper methods, and not meant to be a set of rules that
+	  you follow to the letter.
+	</a></li>
+<a name="requirements">	</a><li>
+<a name="requirements">	  You should not to do any error checking for this assignment.
+	  Assume that all input values to the methods you design are
+	  within the bounds outlined by the assignment
+	  description. 
+	</a></li>
+<a name="requirements">	</a><li>
+<a name="requirements">	  Be sure to observe proper object-oriented usage
+	  etiquette. For example, use <code>get_priority</code> and
+	  <code>set_priority</code>, rather than directly accessing
+	  the <code>priority</code> attribute inside the object.
+	</a></li>
+<a name="requirements">     <!--
+	<li>
+	Optionally, your code may also include a "main" block. "Main" 
+	blocks must begin with <code>if __name__ == "__main__":</code> 
+	and the code that follows must be indented underneath it. This 
+	is not required, but would be a suitable place to put code that 
+	tests your methods (see the Testing and Marking section below).
+        </li>
+	-->
+      </a></ol>
+<a name="requirements">      
+      </a><a name="datafile">
+      </a><h3><a name="datafile">The Data File</a></h3>
+<a name="datafile">      </a><p>
+<a name="datafile">	The data file stores the information needed to reconstruct the
+	collage scene, one shape at a time. For example, the data file
+	for the snowman image above could look like the following:
+      </a></p>
+<a name="datafile">      </a><pre><a name="datafile">200, 200, skyblue
+oval, 40, 40, 50, 50, yellow, 5
+rectangle, 0, 150, 200, 50, forestgreen, 1
+oval, 120, 160, 60, 60, white, 2
+oval, 120, 115, 45, 45, white, 3
+oval, 120, 80, 30, 30, white, 4
+rectangle, 110, 48, 20, 20, black, 5
+oval, 115, 75, 3, 3, black, 6
+oval, 125, 75, 3, 3, black, 6 
+oval, 120, 80, 5, 5, red, 6
+line, 115, 85, 125, 85, black, 7
+line, 100, 68, 140, 68, black, 5
+oval, 120, 105, 4, 4, darkslateblue, 8
+oval, 120, 115, 4, 4, darkslateblue, 8
+oval, 120, 125, 4, 4, darkslateblue, 8
+      </a></pre>
+<a name="datafile">      </a><p>
+<a name="datafile">	The first line in the data file indicates the width, height
+	and background colour of the image, respectively. Each
+	subsequent line in the data file corresponds to a single shape
+	in the final image. The components of each shape are separated
+	by a comma and a single space.
+      </a></p>
+<a name="datafile">      </a><p>
+<a name="datafile">	To open and process this file, you will need the
+	<code>open()</code> function to create a <code>file</code>
+	object, and the <code>readline()</code> method to grab each
+	line from the file. The <code>split()</code> function from the
+	<code>string</code> module should help you break down the line
+	into the parts needed to construct each of the objects.
+      </a></p>
+<a name="datafile">      </a><p>
+<a name="datafile">	(This should all be review for people who took CSC108/A08. If it
+	isn't, please consider taking the ramp-up sessions we offer in
+	the first two weekends of the term)
+      </a></p>
+<a name="datafile">      </a><p>
+<a name="datafile">	To convert colour strings such as "<code>yellow</code>",
+	"<code>black</code>" and "<code>darkslateblue</code>" into the
+	appropriate <code>Color</code> objects, add the following
+	function to your <code>collage.py</code> code:
+      </a></p>
+<a name="datafile">      </a><pre><a name="datafile">def convert_colour(colour_string):
+   '''Convert the colour named in the input string into a Color object
+   by looking up the entry for this colour in the media dictionary.'''
+   return media.__dict__.get(colour_string)
+      </a></pre>
+<a name="datafile">      </a><p><a name="datafile">	
+	</a><a name="testing">
+      </a></p>
+<a name="testing">      </a><hr>
+<a name="testing">      </a><h2><a name="testing">Testing and Marking</a></h2>
+<a name="testing">      
+      </a><h3><a name="testing">Testing your code</a></h3>
+<a name="testing">      
+      </a><p>
+<a name="testing">        We are providing PyUnit test classes in the files </a><a href="http://www.cdf.toronto.edu/%7Ecsc148h/winter/assignments/a1/test_shapes.py">test_shapes.py</a> and <a href="http://www.cdf.toronto.edu/%7Ecsc148h/winter/assignments/a1/test_pqueue.py">test_pqueue.py</a>, which import your
+        module and check that your code satisfies some of the basic
+        requirements. When you run <code>test_shapes.py</code> or
+        <code>test_shapes.py</code>, it should only produce error
+        messages if your methods behave in unexpected ways.  If there
+        is any other output at all (text or pictures), or if any input
+        is required from the user (text input or choosing a file with
+        <code>media.choose_file</code>), then your code is not
+        following the assignment specifications correctly and <font color="red"><strong>will be marked as
+        incorrect</strong></font>. Go back and fix the error(s).
+      </p>
+      <p>
+        The testers that we provide you with check some of the most
+        common problems that snag students in their first assignment;
+        it is not a thorough test of your classes.  Our "autotesting"
+        software, however, <em>will</em> test your code quite
+        thoroughly when we are marking your code.  If you want to get
+        a great mark on the correctness of your classes, do a great
+        job of testing them under all important conditions.  Then we
+        won't be able to find any errors that you haven't already
+        fixed!
+      </p>
+      
+      
+      <h3>Marking</h3>
+      
+      <p>
+	These are the aspects of your work that we will focus on in the marking: 
+      </p>
+      
+      <ul>
+	<li>
+	  <p>
+	    <b>Correctness:</b> Your methods should perform exactly as specified.
+	    Correctness, as measured by our tests, will count for the largest single 
+	    portion of your marks.
+	  </p>
+	</li>
+	<li>
+	  <p>
+	    <b>Formatting style:</b> Make sure that you follow the formatting rules 
+	    in the <a href="http://www.cdf.toronto.edu/%7Ecsc148h/winter/assignments/a1/rules.shtml">Assignment rules</a> page.
+	  </p>
+	</li>
+	<li>
+	  <p>
+	    <b>Programming style:</b> Your variables' names should be
+	    meaningful, and your code as simple and clear as
+	    possible. Wherever possible, your code should use helper
+	    methods rather than duplicated code, although for this
+	    assignment some similar sections may be unavoidable.
+	  </p>
+	</li>
+	<li>
+	  <p>
+	    <b>Docstrings</b>: Each method should have a docstring
+	    that describes its parameters, what the function does, and
+	    what is returned by the function, if anything. There
+	    should be docstrings for your class and module definitions
+	    as well.  The <a href="http://www.cdf.toronto.edu/%7Ecsc148h/winter/assignments/a1/rules.shtml">Assignment rules</a>
+	    page also includes rules you should follow for writing
+	    good docstrings.
+	  </p>
+	</li>
+      </ul>
+      
+      <a name="submitting">
+      </a><hr>
+<a name="submitting">      </a><h2><a name="submitting">Submitting your assignment</a></h2>
+<a name="submitting">      <!--
+      <p>
+      You must hand in your work electronically, using the MarkUs system.
+      Log in to it (link to be provided)
+      <a href= "https://stanley.cdf.toronto.edu/markus/csc108-2010-09/">here</a>, 
+      using your cdf login and password.
+    </p>
+      <p>
+      To declare your partnership, one of you needs to invite the other
+      to be a partner, and then they need to accept the invitation.
+      To invite a partner, navigate to the Assignment 1 page,
+      find "Group Information", and click on "Invite".
+      You will be prompted for the other student's cdf user name; enter it.
+      To accept an invitation, find "Group Information" on the Assignment 1 page,
+      find the invitation listed there, and click on "Join".
+      Note that, when working in a pair, only one person should submit the assignment.
+    </p>
+      <p>
+      To submit your work, again navigate to the Assignment 1 page,
+      then click on the "Submissions" tab near the top.
+      Click "Add a New File" and either type a file name or use the "Browse" button
+      to choose one.
+      Then click "Submit".
+      -->
+      </a><p>
+<a name="submitting">	For detailed submit instructions please see your campus-specific
+	website; the instructions are different on each campus. Well
+	before the submit deadline, you will have practiced submitting in
+	a tutorial.
+      </a></p><p>
+<a name="submitting">      </a></p><p>
+<a name="submitting">	For this assignment, hand in the following files:
+      </a></p>
+<a name="submitting">      </a><ul>
+<a name="submitting">	</a><li>
+<a name="submitting">	  <code>oval.py</code>
+	</a></li>
+<a name="submitting">	</a><li>
+<a name="submitting">	  <code>rectangle.py</code>
+	</a></li>
+<a name="submitting">	</a><li>
+<a name="submitting">	  <code>line.py</code>
+	</a></li>
+<a name="submitting">	</a><li>
+<a name="submitting">	  <code>priorityqueue.py</code>
+	</a></li>
+<a name="submitting">	</a><li>
+<a name="submitting">	  <code>collage.py</code>
+	</a></li>
+<a name="submitting">      </a></ul>
+<a name="submitting">      <!--
+      You can submit a new version of the file later (before the deadline,
+      of course); look in the
+      "Replace" column.
+    </p>
+    -->
+    </a><p>
+<a name="submitting">       Once you have submitted, be sure to check that you have
+       submitted the correct version; new or missing files will not be
+       accepted after the due date.  <!-- Once you have submitted,
+       click on the file's name to check that you submitted the
+       correct version; <font color="red"><strong> We cannot accept
+       any files after the due date,</strong></font> even if you have
+       not modified them since the due date.  --> Remember that
+       spelling of filenames, including case, counts.  <font color="red"><strong>If your files are not named exactly as
+       above, your code will receive zero for
+       correctness.</strong></font>
+    </a></p>
+
+<a name="submitting">    </a><a name="hints">
+    </a><hr>
+<a name="hints">    </a><h2><a name="hints">Hints and Tips</a></h2>
+
+<a name="hints">      </a><ul>
+<a name="hints">	</a><li>
+<a name="hints">	  This is your first assignment, which always takes up more time
+	  than people estimate. <strong>Start working on this early and
+	    often</strong>, and be sure to consult the discussion board for
+	  helpful advice if you get stuck.
+	</a></li>
+<a name="hints">	</a><li>
+<a name="hints">	  Submit early and often as well. Whenever you get your code
+	  debugged and running, submit it just in case. You can always
+	  replace it later, and submitting early makes sure that
+	  you've always got something that works in the submission
+	  directory. Whatever you do, <em>do not wait to submit until
+	  just before the deadline!</em> Something always happens, and
+	  submissions that arrive a minute after the deadline will not
+	  be accepted. Sorry :(
+	</a></li>
+<a name="hints">	</a><li>
+<a name="hints">	  When in doubt, draw it out. Attacking the problem with a
+	  pencil and paper first makes coding the solution so much
+	  easier. Use lots and lots of diagrams before you start
+	  writing your first line of code.
+	</a></li>
+<a name="hints">	</a><li>
+<a name="hints">	  Some of you are starting Python for the first time, and some
+	  have simply forgotten things over the holidays. Remember to
+	  look up how certain commands and objects are used by typing
+	  <code>help(...)</code> in the shell, or look up the term
+	  you're interested in on <code>python.org</code>.
+	</a></li>
+<a name="hints">	</a><li>
+<a name="hints">	  Your classes can be written using only these functions from the
+	  <code>media</code> module:
+          </a><ul>
+<a name="hints">	    </a><li><code><a name="hints">create_picture</a></code></li>
+<a name="hints">	    </a><li><code><a name="hints">add_oval_filled</a></code></li>
+<a name="hints">	    </a><li><code><a name="hints">add_rect_filled</a></code></li>
+<a name="hints">	    </a><li><code><a name="hints">add_line</a></code></li>
+<a name="hints">          </a></ul>
+<a name="hints">	  You are welcome to use other functions from <code>media</code>,
+	  but having this list will help you focus on the most relevant ones.
+	</a></li>
+<a name="hints">      </a></ul>
+<a name="hints">      
+      </a><hr>
+
+<a name="hints">      </a><div class="spacer">
+
+
+<a name="hints">    <!-- insert Google Analytics here -->
+   
+    </a><hr>
+
+<!-- Created: Sat Nov 27 16:28:46 EST 2010 -->
+<!-- hhmts start -->
+<a name="hints">Last modified: Thu Jan  6 20:42:23 EST 2011
+<!-- hhmts end -->
+  </a></div></body></html>

@@ -1,0 +1,38 @@
+*This code review for class Path is split up into three sections: javadoc, style, design.
++ is used for pros .
+- is used for cons.
+# is used for neutral points that are either questions or personal preference.
+
+=====
+summary
+=====
++Overall, very clean style. 
++I found it easy to read.
++Your design choices are simple and intuitive, there is little clutter
+-Minor grammatical errors here and there.
+-javadocs could be more clear in some areas
+-Missing javadocs for some methods
+=====
+javadoc
+=====
+-This applies throughout the javadocs: "paths can be relative or absolute" can be made more clear on the meaning.
+-Line 6 has a small grammatical error. No need for the word "can".
+-Line 9-10 is confusing to me. Reword it or clarify.
+-missing javadoc for getPathArray.
+-whiteSpaceTokenizer javadoc can be more specific. Mention something about dealing with white space, since that is the method's name.
+-There is a typo on line 80. "give" should be "given"
+-Line 130 could use a comment or two explaining that block. 
+-Complete javadoc missing for methods from line 100 and onwards. 
+
+=====
+style
+=====
++Good formatting.
+-Line 57, has an Arraylist<Path> named pathArray. You also have another private variable with the same name at line 16. This could be confusing.
+
+=====
+design
+=====
++Good helper methods
+#Interesting choice of using StringTokenizer instead of string split. I can see how it helps for your implementation.
+-However, this design choice is probably less common (I personally had to look up how it worked), so could be confusing to a reader.

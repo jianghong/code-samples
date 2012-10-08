@@ -1,0 +1,8 @@
+Class name: Directory
+Responsibilities:
+* Holds Folders in a tree format
+* Keeps track of children and parents
+* Directory can handle the 'pwd', 'exit', 'cd', 'mv', 'cp' and 'get' commands
+Collaborators:
+* Works with Folders, to tell where they are relative to other 
+* Folders and/or Files

@@ -1,0 +1,14 @@
+Following the current design of your system, you would create a pushd and popd class that implements Command.
+
+Create a stack class for directories that has your typical stack functionality. 
+
+For pushd:
+First get the current directory and push that onto the stack.
+You already have a method that searches through the current directory for the name of a directory, so you can use that to find the directory you wish to pushd.
+The method should error check to see if the directory exists in the first place.
+Push the directory found onto your stack, then set the current working directory to that directory.
+
+For popd:
+If the stack is nonempty, pop out a directory using the stack's pop.
+Then, using stack's top command, set the current working directory to the top of that stack.
+Of course, you need to continuously check if the stack is nonempty before popping, and if there are no more after popping, make sure the directory is not changed.
