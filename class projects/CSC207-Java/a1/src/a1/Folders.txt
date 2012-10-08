@@ -1,7 +1,0 @@
-Class name: Folder
-Responsibilities:
-* Very similar to a node of a tree
-* Folder can hold files and/or additional folders
-* Folder can handle the 'ls' and 'cat' commands
-Collaborators:
-* Works with Directory, which is the overarching tree system
