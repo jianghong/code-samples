@@ -1,0 +1,281 @@
+W 0 # Name: Jiang Tao Hong, Student #: 997604917
+petition: C 'P' # Store "Petition:" string
+   C 'e'
+   C 't'
+   C 'i'
+   C 't'
+   C 'i'
+   C 'o'
+   C 'n'
+   C ':'
+ques: C 'Q' # Store "Question:" string
+   C 'u'
+   C 'e'
+   C 's'
+   C 't'
+   C 'i'
+   C 'o'
+   C 'n'
+   C ':'
+peter: C 'P' # Store "Peter, please answer the following question if you can:"
+   C 'e'     # followed by ~80 white space for extra room for answer
+   C 't'
+   C 'e'
+   C 'r'
+   C ','
+   C ' '
+   C 'p'
+   C 'l'
+   C 'e'
+   C 'a'
+   C 's'
+   C 'e'
+   C ' '
+   C 'a'
+   C 'n'
+   C 's'
+   C 'w'
+   C 'e'
+   C 'r'
+   C ' '
+   C 't'
+   C 'h'
+   C 'e'
+   C ' '
+   C 'f'
+   C 'o'
+   C 'l'
+   C 'l'
+   C 'o'
+   C 'w'
+   C 'i'
+   C 'n'
+   C 'g'
+   C ' '
+   C 'q'
+   C 'u'
+   C 'e'
+   C 's'
+   C 't'
+   C 'i'
+   C 'o'
+   C 'n'
+   C ' '
+   C 'i'
+   C 'f'
+   C ' '
+   C 'y'
+   C 'o'
+   C 'u'
+   C ' '
+   C 'c'
+   C 'a'
+   C 'n'
+   C ':'
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+   C ' '
+ansHeader: C 'A' # Store "Answer:" string
+   C 'n'
+   C 's'
+   C 'w'
+   C 'e'
+   C 'r'
+   C ':'
+nonbeliever: C 'I' # Store "I do not answer a nonbeliever." string
+   C ' '
+   C 'd'
+   C 'o'
+   C ' '
+   C 'n'
+   C 'o'
+   C 't'
+   C ' '
+   C 'a'
+   C 'n'
+   C 's'
+   C 'w'
+   C 'e'
+   C 'r'
+   C ' '
+   C 'a'
+   C ' '
+   C 'n'
+   C 'o'
+   C 'n'
+   C 'b'
+   C 'e'
+   C 'l'
+   C 'i'
+   C 'e'
+   C 'v'
+   C 'e'
+   C 'r'
+   C '.'
+newline: I 10
+esc: I 27
+qmark: I 63
+space: I 32
+colon: I 58
+period: I 46
+one: I 1
+answer: W 100
+temp: W 1
+userDeterminer: W 1 # user is knowledgeable if userDeterminer is equal to period
+main: LDA petition # print petition string
+   OUT opsys
+   XOR colon
+   BZE user
+   LDA main
+   ADD one
+   STA main
+   BUN main
+user: INP opsys # start asking for user's petition
+   STA temp
+   STA userDeterminer
+   XOR esc
+   BZE opsys
+   LDA temp
+   XOR period
+   BZE know
+naive: LDA temp # naive user's petition
+   OUT opsys
+   INP opsys
+   STA temp
+   XOR esc
+   BZE opsys
+   LDA temp
+   XOR colon
+   BZE question
+   BUN naive
+know: INP opsys # knowledgeable user's petition
+S: STA answer
+   STA temp
+   XOR esc
+   BZE opsys
+   LDA temp
+   XOR colon
+   BZE question
+O: LDA peter
+   OUT opsys
+   LDA S
+   ADD one
+   STA S
+   LDA O
+   ADD one
+   STA O
+   BUN know
+question: LDA colon # print ques string
+   OUT opsys
+   LDA newline
+   OUT opsys
+q: LDA ques
+   OUT opsys
+   XOR colon
+   BZE ask
+   LDA q
+   ADD one
+   STA q
+   BUN q
+ask: INP opsys # get user's question
+   STA temp
+   XOR qmark
+   BZE response
+   LDA temp
+   OUT opsys
+   BUN ask
+response: LDA qmark
+   OUT opsys
+   LDA newline
+   OUT opsys
+r: LDA ansHeader # print ansHeader string
+   OUT opsys
+   XOR colon
+   BZE userD
+   LDA r
+   ADD one
+   STA r
+   BUN r
+userD: LDA userDeterminer
+   XOR period
+   BZE knowAns
+naiveAns: LDA nonbeliever # print nonbeliever string
+   OUT opsys
+   XOR period
+   BZE opsys
+   LDA naiveAns
+   ADD one
+   STA naiveAns
+   BUN naiveAns
+knowAns: LDA answer # print knowledgeable user's answer
+   STA temp
+   XOR colon
+   BZE opsys
+   LDA temp
+   OUT opsys
+   LDA knowAns
+   ADD one
+   STA knowAns
+   BUN knowAns
