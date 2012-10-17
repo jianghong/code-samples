@@ -1,4 +1,0 @@
-100,100,blue
-oval, 50,50,90,90,yellow,1
-rectangle,1,20,98,60,red,2
-line,0,0,99,99,black,3

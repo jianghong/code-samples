@@ -1,9 +1,0 @@
-coo::COO Coo
-bar::BAR Bar
-cooler::COOLER Cooler
-baristas::BARISTAS Baristas
-cool::COOL Cool
-cook::COOK Cook
-bank::BANK Bank
-banner::BANNER Banner
-bag::BAG Bag
