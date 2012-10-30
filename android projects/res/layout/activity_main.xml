@@ -23,6 +23,7 @@
         android:layout_below="@id/add_here"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
+        android:choiceMode="multipleChoice"
         android:layout_above="@id/clear_button"></ListView>
     
 </RelativeLayout>
