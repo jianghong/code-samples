@@ -1,0 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <EditText android:id="@+id/add_here"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:imeOptions="actionSend"
+        android:hint="@string/add_here" /> 
+        
+    <Button
+        android:id="@+id/clear_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="clearDone"
+        android:text="@string/clear_done" 
+        android:layout_alignParentBottom="true"/>
+    <ListView android:id="@+id/toDos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_here"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:choiceMode="multipleChoice"
+        android:layout_above="@id/clear_button"></ListView>
+    
+</RelativeLayout>
+
